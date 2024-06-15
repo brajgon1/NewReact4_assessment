@@ -1,6 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const { sequelize } = require('../util/database');
+const { User } = require('../models/user');
+const { Post } = require('../controllers/post');
+User.hasMany(Post);
+Post.hasMany(User);
 const PORT = process.env.PORT || 4000;
 const {
   getAllPosts,
