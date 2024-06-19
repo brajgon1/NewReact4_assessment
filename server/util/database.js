@@ -6,5 +6,5 @@ const sequelize = new Sequelize(CONNECTION_STRING, {
 });
 
 module.exports = {
-  sequelize,
+  sequelize
 };
