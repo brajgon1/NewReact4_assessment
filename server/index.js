@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const { sequelize } = require('../util/database');
-const { User } = require('../models/user');
-const { Post } = require('../controllers/post');
+const { sequelize } = require("./util/database");
+const { User } = require("./models/user");
+const { Post } = require("./models/post");
 User.hasMany(Post);
 Post.hasMany(User);
 const PORT = process.env.PORT || 4000;
@@ -29,4 +29,11 @@ app.post("/posts", isAuthenticated, addPost);
 app.put("/posts/:id", isAuthenticated, editPost);
 app.delete("/posts/:id", isAuthenticated, deletePost);
 
-app.listen(PORT, () => console.log(`Server Running on ${PORT}`));
+sequelize
+  .sync()
+  .then(() => {
+    app.listen(PORT, () =>
+      console.log(`database sync successful & server running on ${PORT}`)
+    );
+  })
+  .catch((err) => console.log(err));
