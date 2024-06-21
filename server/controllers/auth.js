@@ -26,7 +26,7 @@ module.exports = {
       if (foundUser) {
         const isAuthenticated = bcrypt.compareSync(
           password,
-          foundUser.hashedPass
+          foundUser.hashPass
         );
         if (isAuthenticated) {
           let token = createToken(
@@ -42,9 +42,11 @@ module.exports = {
           };
           res.status(200).send(DATA);
         } else {
+          console.log('password is incorrect')
           res.status(400).send("password is not correct");
         }
       } else {
+        console.log('user does not exist')
         res.status(400).send("User does not exist");
       }
     } catch (error) {
@@ -62,9 +64,10 @@ module.exports = {
       } else {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);
+        console.log(hash);
         let newUser = await User.create({
           username: username,
-          hashedPass: hash
+          hashPass: hash
         });
         let token = createToken(
           newUser.dataValues.username,
