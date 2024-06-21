@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const { User } = require("../models/user");
 require("dotenv").config();
 const { SECRET } = process.env;
@@ -8,7 +9,7 @@ const createToken = (username, id) => {
   return jwt.sign(
     {
       username,
-      id,
+      id
     },
     SECRET,
     {
@@ -20,7 +21,7 @@ const createToken = (username, id) => {
 module.exports = {
   login: async (req, res) => {
     try {
-      let { username, password } = req.body;
+      const { username, password } = req.body;
       let foundUser = await User.findOne({ where: { username: username } });
       if (foundUser) {
         const isAuthenticated = bcrypt.compareSync(
@@ -63,7 +64,7 @@ module.exports = {
         const hash = bcrypt.hashSync(password, salt);
         let newUser = await User.create({
           username: username,
-          hashedPass: hash,
+          hashedPass: hash
         });
         let token = createToken(
           newUser.dataValues.username,
