@@ -24,8 +24,8 @@ const getLocalData = () => {
 
   return {
     token: storedToken,
-    exp: storedExp,
-    userId: storedId,
+    exp: +storedExp,
+    userId: +storedId,
     username: storedName
   };
 };

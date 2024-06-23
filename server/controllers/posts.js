@@ -16,8 +16,6 @@ module.exports = {
       console.log(err);
       res.sendStatus(400);
     }
-    console.log("addPost");
-    res.sendStatus(200);
   },
   getAllPosts: async (req, res) => {
     try {
@@ -38,6 +36,7 @@ module.exports = {
       res.sendStatus(400);
     }
   },
+  
   getCurrentUserPosts: async (req, res) => {
     try {
       const { userId } = req.params;
