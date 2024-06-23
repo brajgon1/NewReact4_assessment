@@ -5,7 +5,7 @@ const { sequelize } = require("./util/database");
 const { User } = require("./models/user");
 const { Post } = require("./models/post");
 User.hasMany(Post);
-Post.hasMany(User);
+Post.belongsTo(User);
 const PORT = process.env.PORT || 4005;
 const {
   getAllPosts,

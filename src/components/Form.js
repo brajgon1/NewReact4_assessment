@@ -1,10 +1,3 @@
-
-
-
-
-// YOU WILL BE INSTRUCTED WHEN YOU SHOULD
-// UNCOMMENT THIS CODE
-
 import {useState, useContext} from 'react'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'

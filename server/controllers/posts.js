@@ -6,10 +6,10 @@ module.exports = {
     try {
       let { title, content, status, userId } = req.body;
       await Post.create({
-        title: title,
-        content: content,
+        title,
+        content,
         privateStatus: status,
-        userId: userId,
+        userId,
       });
       res.sendStatus(200);
     } catch (err) {
@@ -21,31 +21,75 @@ module.exports = {
   },
   getAllPosts: async (req, res) => {
     try {
-       const posts = await Post.findAll({
-          where: {privateStatus: false},
-          include: [{
-             model: User,
-             required: true,
-             attributes: [`username`]
-          }]
-       })
-       res.status(200).send(posts)
+      const posts = await Post.findAll({
+        where: { privateStatus: false },
+        include: [
+          {
+            model: User,
+            required: true,
+            attributes: [`username`],
+          },
+        ],
+      });
+      res.status(200).send(posts);
     } catch (error) {
-       console.log('ERROR IN getAllPosts')
-       console.log(error)
-       res.sendStatus(400)
+      console.log("ERROR IN getAllPosts");
+      console.log(error);
+      res.sendStatus(400);
     }
   },
   getCurrentUserPosts: async (req, res) => {
-    console.log("getCurrentUserPosts");
-    res.sendStatus(200);
+    try {
+      const { userId } = req.params;
+      const posts = await Post.findAll({
+        where: { userId: userId },
+        include: [
+          {
+            model: User,
+            required: true,
+            attributes: [`username`],
+          },
+        ],
+      });
+      res.status(200).send(posts);
+    } catch (error) {
+      console.log("ERROR IN getCurrentUserPosts");
+      console.log(error);
+      res.sendStatus(400);
+    }
   },
+
   editPost: async (req, res) => {
-    console.log("editPost");
-    res.sendStatus(200);
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+      await Post.update(
+        {
+          privateStatus: status,
+        },
+        {
+          where: { id: +id },
+        }
+      );
+      res.sendStatus(200);
+    } catch (error) {
+      console.log("ERROR IN editPost");
+      console.log(error);
+      res.sendStatus(400);
+    }
   },
+
   deletePost: async (req, res) => {
-    console.log("deletePost");
-    res.sendStatus(200);
+    try {
+      const { id } = req.params;
+      await Post.destroy({
+        where: { id: +id },
+      });
+      res.sendStatus(200);
+    } catch (error) {
+      console.log("ERROR IN deletePost");
+      console.log(error);
+      res.sendStatus(400);
+    }
   },
 };
