@@ -15,7 +15,7 @@ const Form = () => {
     const handleSubmit = e => {
         e.preventDefault()
 
-        axios.post('/posts', {title, content, status, userId: state.userId}, {
+        axios.post('/posts', {title, content, privateState: status, userId: state.userId}, {
             headers: {
                 authorization: state.token
             }
@@ -53,7 +53,7 @@ const Form = () => {
                             name='status'
                             id='private-status'
                             value={true}
-                            onChange={e => setStatus(e.target.value)}
+                            onChange={e => setStatus(true)}
                             checked={true}
                         />
                     </div>
@@ -66,7 +66,7 @@ const Form = () => {
                             name='status'
                             id='public-status'
                             value={false}
-                            onChange={e => setStatus(e.target.value)}
+                            onChange={e => setStatus(false)}
                         />
                     </div>
                 </div>

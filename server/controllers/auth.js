@@ -36,7 +36,7 @@ module.exports = {
           const exp = Date.now() + 1000 * 60 * 60 * 48;
           const DATA = {
             username: foundUser.dataValues.username,
-            id: foundUser.dataValues.id,
+            userId: foundUser.dataValues.id,
             token: token,
             exp: exp,
           };
@@ -77,7 +77,7 @@ module.exports = {
 
         const OBJECT = {
           username: newUser.dataValues.username,
-          id: newUser.dataValues.id,
+          userId: newUser.dataValues.id,
           token: token,
           exp: exp,
         };

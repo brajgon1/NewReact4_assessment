@@ -4,11 +4,11 @@ const { Post } = require("../models/post");
 module.exports = {
   addPost: async (req, res) => {
     try {
-      let { title, content, status, userId } = req.body;
+      let { title, content, privateState, userId } = req.body;
       await Post.create({
         title,
         content,
-        privateStatus: status,
+        privateState,
         userId,
       });
       res.sendStatus(200);
@@ -20,7 +20,7 @@ module.exports = {
   getAllPosts: async (req, res) => {
     try {
       const posts = await Post.findAll({
-        where: { privateStatus: false },
+        where: { privateState: false },
         include: [
           {
             model: User,
@@ -36,7 +36,7 @@ module.exports = {
       res.sendStatus(400);
     }
   },
-  
+
   getCurrentUserPosts: async (req, res) => {
     try {
       const { userId } = req.params;
@@ -64,7 +64,7 @@ module.exports = {
       const { status } = req.body;
       await Post.update(
         {
-          privateStatus: status,
+          privateState: status,
         },
         {
           where: { id: +id },
